@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+Order Confirmation
+{% endblock %}
+
+{% block page_content %}
+    <div class="container mt-3">
+        <div class="container mt-4">
+            <!-- thank you message -->
+            <h1>Order Confirmation</h1>
+            <p>Thank you for your purchase<strong>{{' , '+latest_order.first_name if current_user.role=='CUSTOMER' }}{{ ' '+latest_order.last_name if current_user.role=='CUSTOMER' }}</strong>!</p>
+            <p>Your order number is: <strong>{{ latest_order.order_id }}</strong></p>
+            <hr/>
+            <!-- customer information -->
+            <h2>Order Summary</h2>
+            <div>
+                <p><strong>Name:</strong> {{ latest_order.first_name }} {{ latest_order.last_name }}</p>
+                <p><strong>Shipping Address:</strong> {{ latest_order.address }}, {{ latest_order.city }}, {{ latest_order.state }}, {{ latest_order.zipcode }}</p>
+                <p><strong>Payment Amount:</strong> ${{ '{:.2f}'.format(latest_order.order_total|round(2))}}</p>
+            </div>
+            <hr/>
+            {# order details from current order #}
+            <h3>Product Details</h3>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Item Name</th>
+                                <th>Size</th>
+                                <th>Color</th>
+                                <th>Unit Price</th>
+                                <th>Quantity</th>
+                                <th>Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in order_items %}
+                                <tr>
+                                    <td>{{ item.item_name }}</td>
+                                    <td>{{ item.product_size }}</td>
+                                    <td>{{ item.product_color }}</td>
+                                    <td>${{ '{:.2f}'.format(item.item_price)}}</td>
+                                    <td>{{ item.product_qty }}</td>
+                                    <td>${{ '{:.2f}'.format(item.line_price)}}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+{% endblock %}
+
+
+

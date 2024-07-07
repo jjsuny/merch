@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+{% block page_title %}
+    Inventory Purchase Form
+{% endblock %}
+
+{% block page_head %}Inventory Purchase Form{% endblock %}
+
+{% block page_content %}
+<div class="page-contents-form">
+    <h1 id="small-page-header">Inventory Purchase Form</h1>
+    <form class="row g-4" action="{{ url_for('inventory_purchase') }}"
+          enctype="multipart/form-data" method="post">
+        <div class="row mt-2">
+            {# Step 1: Enter product code #}
+            <div class="col-md-3">
+                <label for="product_code" class="form-label-bold">Product Code</label>
+                <input type="text" class="form-control" id="product_code" name="product_code" required>
+            </div>
+            {# Item Name Search Field #}
+            <div class="col-md-3">
+                <label for="item_search" class="form-label-bold">Item Name</label>
+                <input type="text" class="form-control" id="item_search" name="item_search" autocomplete="off" disabled>
+                <div id="floating-dropdown" class="floating-dropdown">
+                    <ul id="dropdown-items">
+                        {# populate dropdown item_name options based on current merchitems database #}
+                        {% for item_name in item_names %}
+                            <li onclick="setItemName(this.textContent)">{{ item_name }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-2">
+            {# Product Size Field #}
+            <div class="col-md-3">
+                <label for="product_size" class="form-label-bold">Product Size</label>
+                <input type="text" class="form-control" id="product_size" name="product_size" disabled>
+            </div>
+
+            {# Product Color Field #}
+            <div class="col-md-3">
+                <label for="product_color" class="form-label-bold">Product Color</label>
+                <input type="text" class="form-control" id="product_color" name="product_color" disabled>
+            </div>
+        </div>
+
+        <div class="row mt-2">
+            {#Purchase Price Field#}
+            <div class="col-md-3">
+                <label for="unit_price" class="form-label-bold">Unit Price</label>
+                <input type="number", min="0" step="0.01" class="form-control" id="unit_price" name="unit_price"
+                       min="0.00" disabled>
+            </div>
+
+            {# Product Stock Field #}
+            <div class="col-md-3">
+                <label for="purchase_qty" class="form-label-bold">Purchase Qty</label>
+                <input type="number" min="1" step="1" class="form-control" id="purchase_qty" name="purchase_qty"
+                       disabled>
+            </div>
+        </div>
+
+        <div class="row-mt-4" id="file-upload-container">
+        {#file upload#}
+            <label for="image_dir" class="form-label-bold">Product Image:</label>
+            <input type="file" id="image_dir" name="image_dir" accept=".jpg, .png, .jpeg, image/jpeg" disabled><br>
+        </div>
+
+        <div class="row mt-2">
+            <!-- Action Buttons -->
+            <div class="col-12 mt-4">
+                <button class="btn btn-primary mt-2" id="submitBtn" type="submit">Submit</button>
+                <a href="{{ url_for('inventory_status') }}" class="btn btn-secondary mt-2" role="button">Cancel</a>
+            </div>
+        </div>
+    </form>
+
+    {# javascript to dynamically prefill based on if entered product code exists in database #}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // floating dropdown interactions
+            const searchInput = $('#item_search');
+            const dropdown = $('#floating-dropdown');
+            searchInput.on('focus', function() {
+                dropdown.show();
+            });
+            searchInput.on('blur', function() {
+                setTimeout(() => dropdown.hide(), 200);
+            });
+            searchInput.on('input', function() {
+                // case-insensitive comparison
+                let searchTerm = $(this).val().toLowerCase();
+                $('#dropdown-items li').each(function() {
+                    let itemText = $(this).text().toLowerCase();
+                    // filter matches
+                    $(this).toggle(itemText.includes(searchTerm));
+                });
+            });
+
+            // autofill and/or disable fields based on product code entry
+            $('#product_code').on('input', function() {
+                const code = $(this).val();
+                if (code) {
+                    $.ajax({
+                        // use the helper route to query
+                        url: '/get-inv-info',
+                        data: { product_code: code },
+                        success: function(data) {
+                            if (data.item_name !== undefined) {
+                                // existing inventory autofill
+                                console.log(data.item_name)
+                                $("#item_search").val(data.item_name).prop('disabled', true).prop('required', false);
+                                $("#product_color").val(data.product_color).prop('disabled', true).prop('required', false);
+                                $("#product_size").val(data.product_size).prop('disabled', true).prop('required', false);
+                                $("#unit_price").val(data.unit_price).prop('disabled', false).prop('required', true);
+                                $("#purchase_qty").val('').prop('disabled', false).prop('required', true);
+                                $("#image_dir").prop('disabled', true);
+                                $("#submitBtn").text('Update Inventory');
+                            } else {
+                                // new inventory
+                                $("#item_search, #product_color, #product_size, #unit_price, #purchase_qty, #image_dir")
+                                    .val('').prop('disabled', false);
+                                $("#item_search, #unit_price, #purchase_qty").prop('required', true)
+                                $("#submitBtn").text('Add New Inventory');
+                            }
+                        },
+                        error: function() {
+                            console.log('Error retrieving product info.');
+                        }
+                    });
+                } else {
+                    // default disable everything but product_code
+                    $("#item_search, #product_color, #product_size, #unit_price, #purchase_qty, #image_dir")
+                        .val('').prop('disabled', true).prop('required', false);
+                    $("#submitBtn").text('Submit');
+                }
+            });
+
+            // enable all fields right before submission so data gets sent
+            $('form').on('submit', function() {
+                // Enable all fields that need to be included in the form submission
+                $("#item_search, #product_color, #product_size, #unit_price, #purchase_qty, #image_dir").prop('disabled', false);
+            });
+        });
+
+        // user selects item_name
+        function setItemName(itemName) {
+            $('#item_search').val(itemName);
+            $('#floating-dropdown').hide();
+        }
+    </script>
+
+</div>
+{% endblock %}

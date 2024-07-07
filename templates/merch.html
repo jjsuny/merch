@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+
+<!-- template for all merchandise items customers can purchase
+contains relevant product info (rotating images, product name, price, etc.) -->
+
+{% block page_title %}
+Merchandise
+{% endblock %}
+
+{% block page_content %}
+
+<div class="page-contents">
+    <div class="row">
+        <h1 id="page-header">Merchandise</h1>
+    </div>
+
+    <hr id="header-hr">
+
+    <div id="merch-item-container">
+        <!-- outer loop is to generate each product card for all merchandise items in the db-->
+        {% for merchitem in merchitems %}
+            <!-- Start of grid cell -->
+            <div class="merch-item">
+                <!-- Image container -->
+                <div class="merch-item-img-container">
+                    <a href="{{ url_for('merch_item', item_id=merchitem.item_id) }}">
+                        {% set inventory_with_image = merchitem.inventories | selectattr('image_dir', 'defined') | first %}
+                        {% if inventory_with_image %}
+                            <img class="merch-item-img"
+                                 src="{{ url_for('static', filename='images/products/' + inventory_with_image.image_dir) }}"
+                                 alt="Picture of {{ merchitem.item_name }}">
+                        {% else %}
+                            {# No image found in any inventory, display default image #}
+                            <img class="merch-item-img"
+                                 src="{{ url_for('static', filename='images/subject.png') }}"
+                                 alt="Default Picture">
+                        {% endif %}
+                    </a>
+                </div>
+                <!-- Product details -->
+                <div class="merch-item-details">
+                    <a href="{{ url_for('merch_item', item_id=merchitem.item_id) }}" class="merch-item-title">{{ merchitem.item_name }}</a>
+                    <p class="merch-item-price">${{ '{:.2f}'.format(merchitem.item_price) }}</p>
+                </div>
+            </div>
+            <!-- End of grid cell -->
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

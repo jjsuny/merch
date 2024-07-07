@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+    Navbar
+{% endblock %}
+
+{% block page_content %}
+
+<!-- navbar functional code-->
+<div class="p-3 m-0 border-0 bd-example m-0 border-0">
+    <div class="navbar-div">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+                <!-- Logo and brand name -->
+                <a class="navbar-brand" href="/homepage">
+                    <img class="logo" src="../static/images/Subject.png" alt="UMD Club Baseball Logo">
+                    <span class="navbar-header">UMD Club Baseball</span>
+                </a>
+                <!-- Navbar toggler for small screens -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <!-- Navbar links -->
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
+                </div>
+                <!-- Right-aligned navbar links -->
+                <div class="d-flex justify-content-end">
+                    <ul class="navbar-nav">
+                        <!-- Home link -->
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        </li>
+                        <!-- Shop link -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Shop</a>
+                        </li>
+                        <!-- Reports dropdown -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                               aria-expanded="false">Reports</a>
+                            <ul class="dropdown-menu">
+                                <!-- Revenue and inventory tables -->
+                                <li><a class="dropdown-item" href="/sales-table">Revenue Table</a></li>
+                                <li><a class="dropdown-item" href="#">Inventory Table</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <!-- Revenue and inventory reports -->
+                                <li><a class="dropdown-item" href="/report-rev">Revenue Report</a></li>
+                                <li><a class="dropdown-item" href="/report-inv">Inventory Report</a></li>
+                            </ul>
+                        </li>
+                        <!-- Cart link -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="/cart"><i class="fa fa-shopping-cart"
+                            ></i> Cart</a>
+                        </li>
+                        <!-- Sign in link -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="/sign-in">Sign In</a>
+                        </li>
+                        <!-- Product management link -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('manage-product') }}">Product Management</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>
+
+{% endblock %}

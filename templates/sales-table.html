@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+Merchandise Sales Table
+{% endblock %}
+
+{% block page_content %}
+<!-- Table code -->
+<div class="page-contents">
+    <h1 id="small-page-header">Revenue Dashboard</h1>
+        <hr id="header-hr">
+
+    <!-- Display revenue by month graph -->
+    <div class="row d-flex justify-content-center">
+        <div class="col-12 row d-flex justify-content-center" id="rev_by_month_graph"></div>
+    </div>
+    <div class="row d-flex justify-content-center">
+        <div class="col-12 row d-flex justify-content-center" id="orders_past_30_graph"></div>
+    </div>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script>
+        // Plot revenue by month graph
+        Plotly.newPlot('rev_by_month_graph', JSON.parse('{{ rev_by_month_graph|safe }}'));
+        // Plot order volume (past 30 days)
+        Plotly.newPlot('orders_past_30_graph', JSON.parse('{{ orders_past_30_graph|safe }}'));
+    </script>
+
+    <b>
+         <!-- Search input -->
+        <label for="gfg">Search by Table Fields:</label>
+        <input id="gfg" type="text" placeholder="Search here">
+    </b>
+<!-- Sales table -->
+    <table class="summary-table">
+        <thead>
+            <tr>
+                <!-- Table headers -->
+                <th scope="col">Order ID</th>
+                <th scope="col">Product Code</th>
+                <th scope="col">Customer Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Order Date</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Total Revenue</th>
+            </tr>
+        </thead>
+        <tbody id="geeks">
+            {% for sale in sales_data %}
+            <tr>
+                <td>{{ sale.order_id }}</td>
+                <td>{{ sale.product_code }}</td>
+                <td>{{ sale.first_name }} {{ sale.last_name }}</td>
+                <td>{{ sale.email }}</td>
+                <td>{{ sale.order_date }}</td>
+                <td>{{ sale.product_qty }}</td>
+                <td>${{ '{:.2f}'.format(sale.total_revenue) }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+    <!-- src for search bar functionality -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#gfg").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#geeks tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+
+
+
+
+
+{% endblock %}

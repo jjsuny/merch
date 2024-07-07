@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block page_title %}Historical Inventory{% endblock %}
+{% block page_content %}
+<div class="page-contents">
+        <h1 id="small-page-header">Historical Inventory</h1>
+            <hr id="header-hr">
+    {% if inventory_level_figure %}
+        <div class="col-12" id="inventory_level_figure"> {{ inventory_level_figure | safe }}</div>
+    {% else %}
+        <!-- Display a message if no data is available -->
+        <div class="col-12">No data available</div>
+    {% endif %}
+</div>
+    <!-- JavaScript to render the Plotly graph -->
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+{% endblock %}

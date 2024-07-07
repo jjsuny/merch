@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block page_title %}Inventory Status{% endblock %}
+{% block page_content %}
+    <div class="page-contents">
+        <h1 id="small-page-header">Inventory Status Dashboard</h1>
+        <hr id="header-hr">
+        <!-- JSON data for the treemap graph -->
+        <div class="col row mt-2">{{ inventory_tree|safe }}</div>
+
+        <!-- Render the Plotly pie chart from JSON data -->
+        <div class="col row mt-2">
+            <div id="inventory-pie-graph"></div>
+        </div>
+
+    <!-- Row for Inventory Table -->
+        <div class="row align-items-start">
+            <div class="row mt-2">
+                <!-- Inventory Table -->
+                <table class="summary-table">
+                    <thead>
+                    <tr>
+                    <!-- Table Headers -->
+                        <!-- hardcode column names to not have underscores -->
+                        <th scope="col">#</th>
+                        <th scope="col">Product Code</th>
+                        <th scope="col">Item Name</th>
+                        <th scope="col">Product Size</th>
+                        <th scope="col">Product Color</th>
+                        <th scope="col">Purchase Price</th>
+                        <th scope="col">Product Stock</th>
+                    </tr>
+                    </thead>
+                    <tbody class="table-group-divider">
+                    {% for inventory in inventories %}
+                        <tr>
+                            <!-- connected this table to the inventory database-->
+                            <td>{{ inventory.product_id }}</td>
+                            <td>{{ inventory.product_code }}</td>
+                            <td>{{ inventory.item_name }}</td>
+                            <td>{{ inventory.product_size }}</td>
+                            <td>{{ inventory.product_color }}</td>
+                            <td>{{ '{:.2f}'.format(inventory.purchase_price) }}</td>
+                            <td>{{ inventory.product_stock }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+                <!-- Form to generate the visualization -->
+                <h3>Inventory Report Snapshot</h3>
+                <form method="post" action="{{ url_for('inventory_history') }}">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="start_date" class="form-label">On Date:</label>
+                                <input type="date" class="form-control" id="start_date" name="start_date">
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Generate Report</button>
+                </form>
+            </div>
+
+            <!-- JavaScript to render the Plotly pie graph from JSON data -->
+            <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    var inventoryPieGraphData = JSON.parse('{{ inventory_pie_graph|safe }}');
+                    Plotly.newPlot('inventory-pie-graph', inventoryPieGraphData.data, inventoryPieGraphData.layout);
+                });
+            </script>
+        </div>
+    </div>
+        </div>
+    </div>
+
+{% endblock %}

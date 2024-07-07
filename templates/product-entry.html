@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+    {% if merch_item %}
+        Edit Merchandise
+    {% else %}
+        Add New Merchandise
+    {% endif %}
+{% endblock %}
+
+{% block page_content %}
+    {% if action and (action=='create' or action=='update') %}
+        <div class="page-contents">
+            <h1 id="small-page-header">
+                {% if action=='create' %}
+                    Add New Merchandise
+                {% elif action=='update' %}
+                    Edit Merchandise
+                {% endif %}
+            </h1>
+            <!-- specify the form type whether its update or create -->
+            <form class="row g-4" enctype="multipart/form-data" method="post"
+                  action="{{ url_for('product_creation' if action == 'create' else 'product_edit',
+                  item_id=merch_item.item_id if action == 'update' and merch_item else None) }}">
+                <!-- Input fields for merchandise details here -->
+                <div class="row mt-2">
+                    <div class="col-md-12">
+                        <label for="item_name" class="form-label-bold">Item Name</label>
+                        <input type="text" class="form-control" id="item_name" name="item_name"
+                               value="{{ merch_item.item_name if merch_item else ''}}" required>
+                    </div>
+                </div>
+                <!-- to force newline -->
+                <div class="row mt-2">
+                    <div class="col-sm-12 col-md-4">
+                        <label for="item_class" class="form-label-bold">Item Class</label>
+                        <input type="text" class="form-control" id="item_class" name="item_class"
+                           value="{{ merch_item.item_class if merch_item else ''}}" required>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-sm-12 col-md-4">
+                        <label for="item_price" class="form-label-bold">Item Price</label>
+                        <input type="number" min="0.01" step="0.01" class="form-control" id="item_price" name="item_price"
+                           value="{{ merch_item.item_price if merch_item else ''}}" required>
+                    </div>
+                </div>
+
+                <!-- merch long description text area -->
+                <div class="row mt-2">
+                    <div class="col-md-12">
+                        <label for="long_desc" class="form-label-bold">Long Description</label>
+                        <textarea class="form-control" rows="5" id="long_desc" name="long_desc">
+                            {{ merch_item.long_desc if merch_item else ''}}</textarea>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <!-- manufacturing details text area -->
+                    <div class="col-md-12">
+                        <label for="manu_details" class="form-label-bold">Manufacturing Details</label>
+                        <textarea class="form-control" rows="5" id="manu_details" name="manu_details">
+                            {{ merch_item.manu_details if merch_item else ''}}</textarea>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <!-- submit/cancel buttons -->
+                    <div class="col-12">
+                        <button class="btn btn-primary" type="submit"> {{ 'Add' if action=='create' else 'Update' }} Merchandise</button>
+                        <a href="{{ url_for('manage_products' if action=='create' else 'product_edit', item_id=merch_item.item_id if merch_item) }}" class="btn btn-secondary" role="button">
+                            Cancel
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    {% endif %}
+{% endblock %}
+

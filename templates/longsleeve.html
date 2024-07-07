@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+{% block page_title %}Longsleeve{% endblock %}
+{% block page_content %}
+<div class="container" id="product-section">
+  <div class="row">
+      <!-- Left Column: Image Carousel -->
+    <div class="col-md-6">
+        <!-- Bootstrap Carousel -->
+        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+            <!-- Carousel Indicators -->
+            <div class="carousel-indicators">
+                <!-- Indicators Buttons -->
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            <!-- Carousel Inner -->
+            <div class="carousel-inner">
+                <!-- Carousel Items -->
+                <div class="carousel-item active">
+                    <img src="https://images.footballfanatics.com/maryland-terrapins/mens-under-armour-red-maryland-terrapins-baseball-performance-long-sleeve-t-shirt_pi4998000_altimages_ff_4998022-71bf0a67cd3606c218aaalt1_full.jpg?_hv=2&w=900" class="d-block w-100" alt="Slide 1">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://images.footballfanatics.com/maryland-terrapins/mens-under-armour-gray-maryland-terrapins-baseball-performance-long-sleeve-t-shirt_pi4998000_altimages_ff_4998021-c0b7500ba6e4c8191e1calt1_full.jpg?_hv=2&w=900" class="d-block w-100" alt="Slide 2">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://images.footballfanatics.com/maryland-terrapins/mens-under-armour-black-maryland-terrapins-baseball-all-day-arch-fleece-pullover-sweatshirt_pi4997000_altimages_ff_4997887-e019f7b5f757b5d32f36alt1_full.jpg?_hv=2&w=900" class="d-block w-100" alt="Slide 3">
+                </div>
+            </div>
+            <!-- Carousel Controls -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+<!-- Right Column: Product Details -->
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- Product Title -->
+                <h1>UMD Club Baseball Long Sleeve </h1>
+                <!-- Product Gender -->
+                <p class=" unisex">Unisex</p>
+                <!-- Product Price -->
+                <h2 class="product-price">$39.99</h2>
+                 <!-- Size Buttons -->
+                <h2 class= "product-size"> Select a size below: </h2>
+               <div class="btn-group" role="group" aria-label="Button sizes">
+                    <button type="button" class="btn btn-primary btn-xs size-btn">XS</button>
+                    <button type="button" class="btn btn-primary btn-sm size-btn">SM</button>
+                    <button type="button" class="btn btn-primary btn-md size-btn">MD</button>
+                    <button type="button" class="btn btn-primary  size-btn">LG</button>
+                    <button type="button" class="btn btn-primary btn-xl size-btn">XL</button>
+            </div>
+                <!-- Product Colors -->
+              <div class="product-color" >
+                  <h2 class= "colors"> Colors: </h2>
+                    <span class="dot-red"></span>
+                    <span class="dot-grey"></span>
+                    <span class="dot-black"></span>
+                 </div>
+
+        </div><!-- end row -->
+            <!-- Add to Cart Section -->
+        <div class="row add-to-cart">
+            <div class="quantity-container">
+                <!-- Quantity Dropdown -->
+                    <div class="dropdown">
+                        <label for="qty" class="form-label"> Quantity </label>
+                        <input type="number" value="1" min="1" class="form=control qty input" id="qty" name="qty">
+                    </div>
+
+                <button type="button" class="add-to-cart-btn">Add to Cart</button>
+            </div>
+        </div><!-- end row -->
+
+            <div id="accordion">
+                <div class="card">
+                    <div class="card-header" id="headingOne">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                Description
+                            </button>
+                        </h5>
+                    </div>
+
+                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                        <div class="card-body">
+                            Display your pride comfortably with this Maryland Terrapins Baseball Performance Long Sleeve T-Shirt from Under Armour. The shirt features lightweight fabric to keep you comfortable, whether you're cheering from the stands or lounging around the house. The design includes screen-printed Maryland Terrapins graphics so that your team pride will be the stylish focal point of your outfit.
+
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" id="headingTwo">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                Details
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                        <div class="card-body">
+                            Product ID: 4998022, Brand: Under Armour, Imported, Screen printed graphics, Material: 60% Polyester/40% Cotton, Long sleeve, HeatGear® technology regulates your body temperature and wicks away moisture, Officially licensed
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" id="headingThree">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                Shipping
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                        <div class="card-body">
+                            Club will reach out with shipping details
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- end col-md-6 -->
+  </div><!-- end row -->
+</div><!-- end container -->
+
+<!-- Bootstrap Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
+{% endblock %}

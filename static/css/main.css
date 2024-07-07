@@ -1,0 +1,784 @@
+@import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap'); /* button style*/
+
+/*button styles*/
+.btn-primary {
+    background-color: red; /* Primary button background color */
+    border-color: red; /* Primary button border color */
+    color: white; /* Text color for primary button */
+}
+
+/*Hover state for primary button*/
+.btn-primary:hover,
+.btn-primary.hover{
+    background-color: darkred; /* Darker background color on hover */
+    border-color: darkred; /* Darker border color on hover */
+}
+
+/* Focus state for primary button*/
+.btn-primary:focus,
+.btn-primary.focus {
+    background-color: red; /* Same background color on focus */
+    border-color: red; /* Same border color on focus */
+}
+
+/* General styles */
+.row {
+    display: flex; /* Flex layout for rows */
+    flex-wrap: wrap; /* Allow wrapping for smaller screens */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.body-inventory {
+    margin: 0; /* Reset margin for body */
+}
+
+/* Homepage image container */
+#homepage-img-container {
+    display: flex; /* Flex layout for alignment */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    height: calc(100vh - 196px); /* Full viewport height */
+}
+/* Homepage image */
+#homepage-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Maintain aspect ratio and cover container */
+    position: absolute; /* Positioned absolutely */
+    z-index: -1; /* Behind other content */
+    filter: brightness(0.5); /* Adjust brightness */
+}
+/* Paragraph header */
+#paragraph-header {
+    font-family: "Newsreader", serif; /* Font family */
+    margin-bottom: 16px; /* Spacing */
+    color: white; /* Text color */
+    font-weight: 500;
+    font-size: 48px;
+}
+/* Paragraph text */
+#paragraph-text {
+    color: white; /* Text color */
+    margin-bottom: 24px; /* Spacing */
+    font-size: 18px;
+}
+/* Centered text */
+.text-center {
+    position: absolute; /* Positioning */
+    width: 600px;
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    margin-top: 50px; /* Additional margin from top */
+}
+/* Page contents */
+.page-contents {
+    width: 80vw !important; /* 80% of viewport width */
+    display: flex; /* Flex layout */
+    flex-direction: column; /* Column direction */
+    margin-left: 50%; /* Center horizontally */
+    transform: translateX(-50%);
+    justify-content: space-between; /* Space between items */
+    margin-top: 48px; /* Margin from top */
+    max-width: 1200px; /* Maximum width */
+    margin-bottom: 48px;
+}
+/* Page contents form */
+.page-contents-form {
+    width: 60vw; /* 60% of viewport width */
+    display: flex; /* Flex layout */
+    flex-direction: column; /* Column direction */
+    justify-content: space-between; /* Space between items */
+    margin-top: 48px;
+    max-width: 1200px;
+    margin-left: 50%;
+    transform: translateX(-25%);
+}
+/*for larger width page contents*/
+#page-header {
+    font-family: "Newsreader", serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-size: 64px;
+    font-weight: 400;
+}
+
+/*for smaller width page contents*/
+#small-page-header {
+    font-family: "Newsreader", serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-size: 40px;
+    font-weight: 400;
+    margin-bottom: 5%;
+}
+/* Horizontal rule for merchandise */
+#merch-hr {
+    width: 80vw;
+    display: flex; /* Flex layout */
+    margin-left: 50%;
+    transform: translateX(-50%);
+    margin-top: 24px;
+    height: 1px;
+    max-width: 1200px;
+}
+/* Container for merchandise sorting */
+#merch-sort-container {
+    margin-top: 12px; /* Margin from top */
+    display: inline-block; /* Display as inline block */
+}
+/* Active sort option for merchandise */
+.merch-active-sort {
+    background: #E61938;
+    border: 1px solid #E61938;
+    padding: 8px 16px;
+    border-radius: 1000px;
+    color: white;
+}
+/* Hover effect for active sort option */
+.merch-active-sort:hover {
+    background-color: darkred; /* Darkened background color */
+    border-color: darkred; /* Darkened border color */
+}
+/* Inactive sort option for merchandise */
+.merch-inactive-sort {
+    background: white;
+    border: 1px solid #C2C2C2;
+    padding: 8px 16px;
+    border-radius: 1000px;
+}
+/* Hover effect for inactive sort option */
+.merch-inactive-sort:hover {
+    background-color: darkgrey;
+    border-color: darkgray;
+}
+/* Container for merchandise items */
+#merch-item-container {
+    width: 80vw;
+    margin: 0 auto;
+    display: grid; /* Grid layout */
+    grid-template-columns: repeat(4, 1fr); /* split into 4 columns */
+    gap: 20px; /* fixed gap between items*/
+}
+/* Individual merchandise item */
+.merch-item {
+    background: #FAFAFA;
+    border: 1px solid #C6C6C6;
+    border-radius: 16px;
+    box-shadow: 0px 0px 50px #00000022;
+    height: 20vw; /* or auto */
+}
+/* Container for merchandise item image */
+.merch-item-img-container {
+    text-align: center;
+    height: 70%;
+}
+/* Details section of merchandise item */
+.merch-item-details {
+    padding: 5px;
+    text-align: left;
+    height: 30%
+}
+/* Styling for links within merchandise item details */
+.merch-item-details a {
+    text-decoration: none;
+    color: #333;
+}
+/* Styling for merchandise item price */
+.merch-item-price {
+    padding-left: 8px;
+    padding-top: 12px;
+    color: #E61938;
+    font-weight: bold;
+}
+
+.text-left {
+    text-align: right;
+}
+
+/* Cursor style for merchandise item on hover */
+.merch-item:hover {
+    cursor: pointer;
+}
+/* Styling for merchandise item image */
+.merch-item-img {
+    width: 90%;
+    height: 90%;
+    object-fit: cover; /* Ensure the image covers the container */
+}
+/* Styling for merchandise item title */
+.merch-item-title {
+    padding-left: 8px;
+    padding-top: 16px;
+    color: black;
+    font-weight: 500;
+}
+
+/* Media query for viewport width up to 1250px */
+@media (max-width: 1250px) {
+    #merch-item-container {
+        grid-template-columns: 1fr 1fr 1fr; /* Change to three columns */
+    }
+}
+/* Media query for viewport width up to 1050px */
+@media (max-width: 1050px) {
+    #merch-item-container {
+        grid-template-columns: 1fr 1fr; /* Change to two columns */
+    }
+/* Display as inline-block */
+    #merch-div {
+        display: inline-block;
+    }
+}
+/* Media query for viewport width up to 600px */
+@media (max-width: 600px) {
+    #merch-item-container {
+        grid-template-columns: 1fr;
+    }
+
+    #merch-div {
+        display: inline-block; /* Display as inline-block */
+    }
+}
+
+#header-div {
+    width: 80vw;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    justify-content: space-between;
+    margin-top: 48px;
+    max-width: 1200px;
+}
+
+#header {
+    font-family: "Newsreader", serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-size: 64px;
+    font-weight: 400;
+}
+
+#header-hr {
+    width: 80vw;
+    display: flex;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    margin-top: 16px;
+    margin-bottom: 16px;
+    height: 1px;
+    max-width: 1200px;
+}
+/* Flexbox container for header elements */
+#flex-header-div {
+    display: flex;
+}
+/* Styling for danger button */
+.btn-danger.btn{
+    background-color: #E61938;
+    font-size: 18px;
+}
+/* Styling for the cart number container */
+#cart-num {
+    display: flex;
+    margin-left: 16px;
+    margin-top: 35px;
+}
+/* Flexbox container for cart elements */
+#cart-main-div {
+    display: flex;
+}
+/* Styling for the cart detail container */
+#cart-detail-div {
+    width: 350px;
+    background: pink;
+    height: 50px;
+}
+/* Styling for the cart item container */
+#cart-item-div {
+    width: 100%;
+    height: 50px;
+}
+/* Styling for the cart details */
+#cart-details {
+    background: #FAFAFA;
+    margin-left: 32px;
+    padding: 24px;
+    width: 350px;
+    justify-content: left;
+    height: auto;
+    border: 1.5px solid #E6E6E6;
+    border-radius: 16px;
+}
+/* Styling for active/focused dropdown items */
+.dropdown-item:active:focus {
+    background-color: #E61938;
+}
+/* Styling for the order header */
+#order-header {
+    font-size: 18px;
+    margin-bottom: 24px;
+}
+/* Styling for the row containing cart details */
+.cart-detail-row {
+    display: flex;
+    justify-content: space-between;
+}
+/* Styling for text in the cart details */
+.cart-detail-text {
+    font-weight: 300;
+    font-size: 14px;
+}
+/* Styling for total cart details text */
+.total-cart-detail-text {
+    font-weight: 450;
+    font-size: 14px;
+}
+/* Styling for quantity input within form control */
+.qty-input.form-control{
+    width: 60px;
+    height: 30px;
+}
+/* Styling for form control when required */
+.form-control:required {
+    border: 1px solid red;
+    background-color: #EFEFEF;
+}
+/* Styling for form control when disabled */
+.form-control:disabled {
+    border: 1px dashed darkslategray;
+    background-color: #CFCFCF;
+}
+/* Styling for submit order button */
+#submit-order-btn {
+    width: 100%;
+    border-radius: 8px;
+    padding: 8px;
+    border: none;
+    color: white;
+    background: #E61938;
+    font-size: 14px;
+    margin-top: 16px;
+}
+/* Styling for submit order button on hover */
+#submit-order-btn:hover {
+    background-color: darkred;
+    border-color: darkred;
+}
+/* Styling for danger button on hover */
+.btn-danger:hover {
+    background-color: darkred;
+    border-color: darkred;
+}
+/* Styling for cart item title on hover */
+.cart-item-title:hover {
+    cursor: pointer;
+}
+/* Styling for cart item */
+.cart-item {
+    padding: 16px;
+    height: auto;
+    width: 100%;
+    background: white;
+    margin-bottom: 16px;
+    border-radius: 16px;
+    border: 1.5px solid #E6E6E6;
+    display: flex;
+}
+/* Styling for cart item details */
+.cart-item-details {
+    margin: 0px 16px;
+    width: 100%;
+}
+/* Styling for cart item title */
+.cart-item-title {
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+/* Styling for cart item image container */
+.cart-item-img-container {
+    height: 80px;
+    width: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+/* Styling for cart item image */
+.cart-item-img {
+    height: 80px;
+    width: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+/* Styling for cart item quantity text */
+.cart-item-qty-text {
+    font-size: 14px;
+    font-weight: 400;
+    margin-bottom: 0px;
+    color: #7B7779;
+}
+/* Styling for checked radio button label */
+input[type="radio"]:checked + .size-label {
+    background-color: #333;
+    color: #fff;
+}
+
+/* Styling for quantity input */
+.qty-input {
+    width: 40px;
+    height: auto;
+    font-size: 12px;
+    border: 1px solid #e2e2e2;
+    border-radius: 4px;
+    padding: 2px 4px;
+}
+/* Styling for cart item price */
+.cart-item-price {
+    color: #E61938;
+    font-weight: bold;
+}
+/* Styling for delete item button */
+.delete-item-button {
+    filter: opacity(0.4);
+    width: 16px;
+    height: 16px;
+    margin-left: 16px;
+    margin-top: -2px;
+    cursor: pointer;
+
+}
+/* Styling for delete item icon */
+.delete-item-icon {
+    width: 16px;
+    height: 16px;
+}
+/* Hover effect for delete item button */
+.delete-item-button:hover {
+    filter: opacity(1);
+    transition: 0.2s;
+}
+/* Styling for clear cart link */
+.clear-cart-link {
+    cursor: pointer;
+    color: #777;
+    text-decoration: none;
+}
+/* Hover effect for clear cart link */
+.clear-cart-link:hover {
+    cursor: pointer;
+    color: #000000;
+}
+
+/* navbar style*/
+
+.logo{
+  width: 40px;
+  height: 40px;
+}
+
+
+.navbar-div {
+    padding-left: 1%;
+    padding-right: 1%;
+    width:100%;
+    background-color:white;
+    max-width: 185vh;
+}
+
+.dropdown, .nav-item{
+    margin-right: 1%;
+    margin-left: 1%;
+    white-space: nowrap;
+}
+
+.navbar-header {
+    color: #E61938;
+    font-family: "Newsreader", serif;
+    font-size: 24px;
+    padding-top: 50px;
+    font-weight: 500;
+}
+/* order confirmation */
+/* Body styles */
+.body-order-confirmation{
+    background-color: #ffffff; /* White background */
+}
+
+
+p {
+    color: #000000; /* Black paragraph text */
+}
+
+/* Table Border Color */
+.table {
+    border-color: #e61938; /* Red border for tables */
+}
+
+#order-summary table {
+    border: 1px solid #e61938; /* Red border for tables */
+}
+
+/*product*/
+.container
+{
+    margin-top: 100px
+
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    fill: black;
+}
+
+
+.add-to-cart{
+    margin-top:50px ;
+    margin-bottom: 75px;
+    background: #FAFAFA;
+    border: 1px solid #E6E6E6;
+    background-size: auto;
+    box-shadow: 0px 0px 50px #00000011;
+    padding: 16px;
+    margin-left: 8px;
+        }
+
+
+.add-to-cart-btn{
+    background: #E61938;
+    font-size: 18px;
+    flex: 1;
+    border: none;
+    color: white;
+    font-weight: 500;
+    border-radius: 4px;
+    padding: 4px;
+    margin-top: 36px;
+}
+
+.add-to-cart-btn:hover {
+    background-color: darkred;
+    border-color: darkred;
+}
+
+.unisex {
+    color: #555;
+    font-size: 24px;
+    margin-bottom: 16px;
+}
+
+
+.btn-link
+{
+    color: black;
+    font-weight: bold;
+    text-underline-mode: false;
+}
+
+.product-customization
+{ font-size: 15px;
+    margin-top:15px;
+}
+
+.size-btn {
+    margin-right: 10px;
+    background: #E6E6E6;
+    border-color: #E6E6E6;
+    color: black;
+    border-radius: 32px;
+    /*box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);*/
+}
+
+.size-btn:hover {
+    background: #bbb;
+    color: black;
+     border-color: #bbb;
+}
+
+.dropdown-menu {
+     min-width: auto;
+}
+
+.dropdown-item {
+    cursor: pointer;
+}
+
+/* adaptive dropdown */
+.floating-dropdown {
+    display: none;
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    z-index: 1000;
+    max-height: 40vw;
+    overflow-y: auto; /* scrollbar */
+}
+
+.ProductQuantity{
+    font-size: 15px;
+}
+
+.quantity-container {
+    display: flex;
+    align-items: center;
+}
+
+.quantity-container .dropdown {
+    margin-right: 10px;
+    margin-left: 8px;
+}
+
+.form-control {
+    margin-top:5px
+}
+
+.form-label-bold {
+    font-weight: bold;
+}
+
+
+.col-md-6 {
+    padding-left:10px;
+}
+
+.dot {
+    height: 20px;
+    width: 20px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.color-input:checked + .dot {
+    border: 3px solid #555;
+    filter: opacity(0.5);
+}
+
+.color-option:hover .dot {
+    transform: scale(1.2);
+    transition: transform 0.2s ease-in-out;
+}
+
+.color-input {
+    display: none;
+}
+
+.dot-red {
+    margin-top:5px;
+    height: 25px;
+    width: 25px;
+    background-color:#E61938;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.dot-white {
+    margin-top:5px;
+    height: 25px;
+    width: 25px;
+    background-color:#FFFFFF;
+    border-radius: 50%;
+    display: inline-block;
+    border: 1px solid gray;
+}
+
+.dot-gray{
+    margin-top:5px;
+    height: 25px;
+    width: 25px;
+    background-color:lightgrey;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.dot-black{
+    margin-top:5px;
+    height: 25px;
+    width: 25px;
+    background-color:black;
+    border-radius: 50%;
+    display: inline-block;
+}
+/*profit summary*/
+
+ /*table style*/
+/* Table Cell Padding */
+.summary-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.logo{
+  width: 40px;
+  height: 40px;
+}
+
+.graph{
+  width: 80%;
+  height: 80%;
+}
+
+.summary-table th, .summary-table td{
+  border: 1px;
+  padding: 8px;
+  text-align: left;
+  font-size: small;
+}
+
+
+.summary-table th{ /*special header style*/
+  font-weight: bold;
+  font-size: large;
+  text-align: left;
+  background-color:darkslategray;
+  color:white;
+}
+
+input[type="checkbox"] {
+  border: 1px solid black;
+}
+
+.string-cell {/*custom cell is string*/
+  text-align: left !important;
+}
+
+/* Table Striped Rows */
+.summary-table tbody tr:nth-of-type(odd) {
+  background-color: lightgray;
+}
+
+/* sign in */
+.form-sign-in{
+    width: 30%;
+    background-color: ghostwhite;
+    padding: 50px;
+    border-radius: 20px;
+    margin-top: 100px;
+}
+
+.btn-primary-sign-in {
+    width: 100%;
+    color: white;
+    background-color: lightcoral;
+    margin: auto;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+.btn-primary-sign-in:hover {
+    background-color: darkred;
+
+}
+
+.body-sign-in {
+    background-image: url('/static/images/MarylandCampusBackground.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    /*background-size: 100% 100%;*/
+    background-position: center;
+}

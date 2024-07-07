@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block page_title %}Price Change{% endblock %}
+{% block page_content %}
+    <div class="page-contents">
+
+        <h1 id="small-page-header">Price Change History</h1>
+        <hr id="header-hr">
+
+        <div class="row align-items-start">
+            <div class="row mt-2">
+               <!-- Table for displaying price changes-->
+               <table class="summary-table">
+                   <thead><tr>
+                       <!-- Table header columns, had to hardcode column names to not have underscores -->
+                       <th scope="col">#</th> <!-- Placeholder for an ID or index -->
+                       <th scope="col">Item Name</th> <!-- Column for item ID -->
+                       <th scope="col">Old Price</th> <!-- Column for item price -->
+                       <th scope="col">New Price</th>
+                       <th scope="col">Price Change</th> <!-- Column for price change -->
+                       <th scope="col">Change Date</th>
+                       </tr></thead>
+                   <tbody class="table-group-divider">
+                       {% for pc in table %}
+                           <!-- Loop through each price change value -->
+                           <tr>
+                               <!-- connected this table to the price change database -->
+                                <td>{{ pc.change_id }}</td>
+                                <td>{{ pc.item_name }}</td>
+                                <!-- Display original item price -->
+                                <td>${{ '{:.2f}'.format(pc.item_price) }}</td>
+                                <td>${{ '{:.2f}'.format(pc.new_price) }}</td>
+                                <!-- Display the change in price -->
+                                <td>{{ '(' if pc.price_change<0 }}${{ '{:.2f}'.format(pc.price_change*-1 if pc.price_change < 0 else pc.price_change) }}{{')' if pc.price_change<0 }}</td>
+                                <td>{{ pc.change_date}}</td>
+                            </tr>
+                       {% endfor %}
+                   </tbody>
+               </table>
+            </div>
+                </div>
+    </div>
+    {% endblock %}

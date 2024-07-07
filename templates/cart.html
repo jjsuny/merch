@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+{% block page_title %}Cart{% endblock %}
+{% block page_content %}
+
+    <!-- Header section -->
+    <div id="header-div">
+        <div id="flex-header-div">
+            <h1 id="header">Cart</h1>
+            <p id="cart-num">{{ cart_count }} items</p>
+        </div>
+        <!-- Cart items section -->
+        {% if cart_count > 0 %}
+            <hr id="header-hr">
+            <div id="cart-main-div">
+            <div id="cart-item-div">
+                <!-- Loop through cart items -->
+                {% set ns = namespace(item = 0) %}
+                {% for merch_item in products %}
+                    <div class="cart-item">
+                        <!-- Cart item image -->
+                        <div class="cart-item-img-div">
+                            <img class="cart-item-img" src="../static/images/products/{{ merch_item['product_image'] }}"
+                                 alt="black pullover hoodie image">
+                        </div>
+                        <div class="cart-item-details">
+                            <!-- Cart item details -->
+                            <p class="cart-item-title">{{ merch_item['product_name'] }}
+                                - {{ merch_item['product_size'] }}</p>
+                            <p class="cart-item-qty-text">Quantity</p>
+                            <!-- Quantity input field -->
+                            <input type="number" name="quantity" id="quantity-{{ merch_item['item_id'] }}"
+                                   value="{{ merch_item['product_quantity'] }}" min="1" class="form-control qty-input"
+                                   data-product-id="{{ merch_item['item_id'] }}">
+                        </div>
+                        <!-- Cart item price -->
+                        <p class="cart-item-price">${{ '{:.2f}'.format(merch_item['product_price'] ) }}</p>
+                        <!-- Delete item button -->
+                        <a class="delete-item-button" href="{{ url_for('cart_remove', index=ns.item) }}">
+                            <svg class="delete-item-icon" xmlns="http://www.w3.org/2000/svg" clip-rule="evenodd"
+                                 fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24">
+                                <path d="m20.015 6.506h-16v14.423c0 .591.448 1.071 1 1.071h14c.552 0 1-.48 1-1.071 0-3.905 0-14.423 0-14.423zm-5.75 2.494c.414 0 .75.336.75.75v8.5c0 .414-.336.75-.75.75s-.75-.336-.75-.75v-8.5c0-.414.336-.75.75-.75zm-4.5 0c.414 0 .75.336.75.75v8.5c0 .414-.336.75-.75.75s-.75-.336-.75-.75v-8.5c0-.414.336-.75.75-.75zm-.75-5v-1c0-.535.474-1 1-1h4c.526 0 1 .465 1 1v1h5.254c.412 0 .746.335.746.747s-.334.747-.746.747h-16.507c-.413 0-.747-.335-.747-.747s.334-.747.747-.747zm4.5 0v-.5h-3v.5z"
+                                      fill-rule="nonzero"/>
+                            </svg>
+                        </a>
+                    </div>
+                    {% set ns.item = ns.item + 1 %}
+                {% endfor %}
+                <!-- Clear cart link -->
+                <a class="clear-cart-link" onclick="location.href='{{ url_for('clear_cart') }}'">Clear Cart</a>
+            </div>
+        {% else %}
+            <p>Your cart is currently empty. <a href="{{ url_for('merch') }}">Continue shopping</a> to add items to your
+                cart.</p>
+        {% endif %}
+        {% if cart_count > 0 %}
+            <!-- Cart details section -->
+            <div id="cart-details-div">
+                <div id="cart-details">
+                    <!-- Cart summary rows -->
+                    <h2 id="order-header">Order Summary</h2>
+                    <div class="cart-detail-row">
+                        <p class="cart-detail-text">Subtotal</p>
+                        <p class="cart-detail-text">{{ "${:,.2f}".format(cart_sum) }}</p>
+                    </div>
+                    <div class="cart-detail-row">
+                        <p class="cart-detail-text">Tax</p>
+                        <p class="cart-detail-text">{{ "${:,.2f}".format(cart_shipping) }}</p>
+                    </div>
+                    <div class="cart-detail-row">
+                        <p class="total-cart-detail-text">Total</p>
+                        <p class="total-cart-detail-text">{{ "${:,.2f}".format(cart_total) }}</p>
+                    </div>
+                    <!-- PayPal button container -->
+                    <div class="mt-2" id="paypal-button-container"></div>
+                </div>
+            </div>
+        {% endif %}
+        </div>
+    </div>
+    <!-- Quantity input change event listener -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const quantityInputs = document.querySelectorAll('.qty-input');
+            quantityInputs.forEach(function (input) {
+                input.addEventListener('change', function () {
+                    const productId = input.dataset.productId;
+                    const newQuantity = parseInt(input.value);
+                    fetch(`/cart/update/${productId}?quantity=${newQuantity}`, {
+                        method: 'POST',
+                    })
+                        .then(response => {
+                            if (response.ok) {
+                                location.reload();
+                            } else {
+                                console.error('Failed to update cart');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error updating cart:', error);
+                        });
+                });
+            });
+        });
+    </script>
+    {% if cart_count > 0 %} <!-- PayPal checkout script -->
+        <script src="https://www.paypal.com/sdk/js?client-id={{ config['PAYPAL_CLIENT_ID'] }}&currency=USD&disable-funding=credit,card"></script>
+        <!-- Set up a container element for the button -->
+        <div class="mt-2" id="paypal-button-container"></div>
+        <!-- PayPal button initialization -->
+        <script>
+            paypal.Buttons({
+                // Sets up the transaction when a payment button is clicked
+                createOrder: (data, actions) => {
+                    return actions.order.create({
+                        purchase_units: [{
+                            amount: {
+                                value: '{{ cart_total }}'
+                            }
+                        }]
+                    });
+                },
+                // Finalize the transaction after payer approval
+                // Finalize the transaction on the server after payer approval
+                onApprove: (data, actions) => {
+                    return fetch(`/payments/${data.orderID}/capture`, {
+                        method: "post",
+                    })
+                        .then((response) => response.json())
+                        .then((orderData) => {
+                            // Successful capture! For dev/demo purposes:
+                            console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+                            const transaction = orderData.purchase_units[0].payments.captures[0];
+                            alert(`Transaction ${transaction.status}: ${transaction.id}\n\nSee console for all available details`);
+                            location.href = '{{request.url_root}}process-order/';
+                        });
+                }
+            }).render('#paypal-button-container');
+        </script>
+    {% endif %}
+{% endblock %}

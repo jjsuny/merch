@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+Report Skeleton
+{% endblock %}
+<!-- Main content section -->
+{% block page_content %}
+    <div class="col-10 mx-auto"> <!-- Add 'mx-auto' class for horizontal centering -->
+        <!-- Summary table -->
+        <table class="summary-table">
+        <!-- Table header -->
+         <thead>
+           <tr>
+             <th scope="col">Product ID</th>
+             <th scope="col">Product Name</th>
+             <th scope="col">Unit Cost</th>
+             <th scope="col">Inventory Quantity</th>
+             <th scope="col">Purchase Total</th>
+             <th scope="col">Purchase Date</th>
+           </tr>
+         </thead>
+            <!-- Table body -->
+         <tbody class="table-group-divider">
+           {% for inventory in inventories %}
+           <tr>
+               <td>
+                   <!-- Checkbox input -->
+               <label for = "flexCheckDefault"></label>
+               <input class="form-check-input" type = "checkbox" value = "" id="flexCheckDefault"
+               </td>
+               <!-- Inventory details -->
+               <td>{{ inventory.product_code }}</td>
+               <td>{{ inventory.product_size }}</td>
+               <td>{{ inventory.product_color }}</td>
+               <td>{{ inventory.product_stock }}</td>
+               <td>{{ inventory.image_dir }}</td>
+           </tr>
+           {% endfor %}
+         </tbody>
+       </table>
+    </div>
+{% endblock %}

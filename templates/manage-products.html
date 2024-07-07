@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+    Manage Products
+{% endblock %}
+
+{% block page_head %}
+    Manage Products
+{% endblock %}
+
+{% block page_content %}
+<div class="page-contents">
+<!-- Table to display product summary -->
+    <div class="row">
+        <div class="col">
+            <table class="summary-table">
+                <tr>
+                <!-- Column headers -->
+                    <!-- hardcode column names to remove underscores -->
+                    <th>#</th>
+                    <th>Product Name</th>
+                    <th>Item Class</th>
+                    <th>Item Price</th>
+                    {% if current_user.role=='ADMIN' %}
+                        <!-- Additional actions column for admins -->
+                        <th>Actions</th>
+                    {% endif %}
+                </tr>
+
+                {% for merchitem in MerchItems %}
+                <tr>
+                <!-- Product details -->
+                    <td>{{ merchitem.item_id }}</td>
+                    <td>{{ merchitem.item_name }}</td>
+                    <td>{{ merchitem.item_class }}</td>
+                    <td>{{ "$%.2f"|format(merchitem.item_price) }}</td>
+                    {% if current_user.role=='ADMIN' %}
+                        <!-- Action buttons for admins -->
+                        <td>
+                            <a href="{{ url_for('product_edit', item_id =merchitem.item_id) }}" class="btn btn-secondary" role="button">Edit</a>
+                            <a href="{{ url_for('product_delete', item_id =merchitem.item_id) }}" class="btn btn-secondary" role="button">Delete</a>
+                        </td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+<!-- Display total number of products -->
+    <div class="row mt-2">
+        <div class="col">
+            Total Number of Products: {{ MerchItems|length }}
+        </div>
+    </div>
+<!-- Button to add a new product -->
+    <div class="row mt-2">
+        <div class="d-grid col-2 mx-auto">
+             <a href="{{ url_for('product_creation') }}" class="btn btn-primary" role="button">Add New Product</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

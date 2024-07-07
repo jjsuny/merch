@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block page_title %}Homepage{% endblock %}
+{% block page_content %}
+    <div class="page-contents">
+        <h1 id="small-page-header">Profit Summary</h1>
+            <hr id="header-hr">
+        <div class="row align-items-start">
+                <!-- Display graph -->
+                <div class="row d-flex justify-content-center">
+                    <div class="col-12 row d-flex justify-content-center" id="profit_exp_rev_by_month_graph"></div>
+                </div>
+                <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+                <script>
+                    Plotly.newPlot('profit_exp_rev_by_month_graph', JSON.parse('{{ profit_exp_rev_by_month_graph|safe }}'));
+                </script>
+                <!-- Table -->
+                <table class="summary-table">
+                     <thead>
+                       <tr>
+                         <th scope="col">Month</th>
+                         <th scope="col">Revenue</th>
+                         <th scope="col">Expenses</th>
+                         <th scope="col">Total Profit</th>
+                       </tr>
+                     </thead>
+                    <tbody class="table-group-divider">
+                        <!-- loop through merged_data to fill in table values -->
+                        {% for each_month in merged_data %}
+                           <tr>
+                               <td>{{ each_month['month'] }}</td>
+                               <td>${{ '{:.2f}'.format(each_month['revenue']) }}</td>
+                               <td>${{ '{:.2f}'.format(each_month['expenses']) }}</td>
+                               <td>{{ '(' if each_month['profit']<0 }}${{ '{:.2f}'.format(each_month['profit']*-1 if each_month['profit'] < 0 else each_month['profit']) }}{{')' if each_month['profit']<0 }}</td>
+                           </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+    </div>
+{% endblock %}

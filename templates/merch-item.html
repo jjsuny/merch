@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+Merch Item
+{% endblock %}
+
+{% block page_content %}
+    <div class="page-contents">
+      <div class="row">
+        <div class="col-md-6">
+            <!-- image carousel -->
+            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                </div>
+                <div class="carousel-inner">
+                <!-- keep track of which colors and sizes are available from inventories -->
+                {% set seen_colors = [] %}
+                {% set seen_sizes = [] %}
+                <!-- display as many carousel images as there are color options for this item-->
+                {% for inventory in inventories %}
+                    <!-- add images for new colors -->
+                    {% if inventory.product_color not in seen_colors %}
+                        <div class="carousel-item {% if loop.index == 1 %}active{% endif %}" data-color="{{ inventory.product_color|lower() }}">
+                        {% set productimgpath = url_for('static', filename='images/products/'+inventory.image_dir) %}
+                            {% if inventory.image_dir != ''  %}
+                                <img src="{{ productimgpath }}" class="d-block w-100" alt="Slide {{ loop.index }}">
+                                {% endif %}
+                        </div>
+                        {% set _ = seen_colors.append(inventory.product_color) %}
+                    {% endif %}
+                    <!-- also track sizes in this loop to use for later -->
+                    {% if inventory.product_size not in seen_sizes %}
+                        {% set _ = seen_sizes.append(inventory.product_size) %}
+                    {% endif %}
+                {% endfor %}
+                </div>
+            <!-- carousel previous and next buttons -->
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- product details -->
+        <div class="col-md-6">
+         <form action="{{ url_for('cart_add', item_id=merchitem['item_id'])}}" method="GET">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>{{ merchitem.item_name }}</h1>
+                    <p class=" unisex">{{ merchitem.item_class }}</p>
+                    <h2 class="product-price">Price: ${{ '{:.2f}'.format(merchitem.item_price)}}</h2>
+                    <h2 class="product-customization"> Select a size below: </h2>
+                    <!-- keep track of which sizes are available from inventories -->
+                    <div class="btn-group btn_group" role="group" aria-label="Button sizes">
+                        {% set size_order = ['XS', 'S', 'M', 'L', 'XL', 'XXL'] %}
+                        {% for size in size_order %}
+                            {% if size in seen_sizes %}
+                               <label for="size_selection_{{ size }}" class="btn btn-primary btn-xs size-btn highlighted">
+                                    <input type="radio" name="size_selection" id="size_selection_{{ size }}" value="{{ size }}" required>
+                                        {{ size }}
+                                </label>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                <!-- Colors based on available colors from inventories -->
+                    <div class="product-color">
+                        <h2 class="product-customization"> Colors: </h2>
+                        {% for color in seen_colors %}
+                            <label for="color_selection_{{ color }}" class="color-option">
+                                <input type="radio" name="color_selection" id="color_selection_{{ color }}" value="{{ color }}" class="color-input" required onchange="changeCarouselSlide('{{ color|lower() }}')">
+                                    <span class="dot dot-{{ color.lower() }}"></span>
+                            </label>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+                <!-- end row -->
+                <!-- end row -->
+            <div class="row add-to-cart">
+                <div class="quantity-container">
+                        <div class="dropdown">
+                            <label for="product_quantity" class="form-label"> Quantity </label>
+                            <input type="number" value="1" min="1" class="form-control qty input" id="product_quantity" name="product_quantity">
+                        </div>
+                    <button type="submit" class="add-to-cart-btn">Add to Cart</button>
+                </div>
+            </div>
+                <!-- end row -->
+            </form>
+            <div id="accordion">
+                <div class="card">
+                    <div class="card-header" id="headingOne">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                Description
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                        <div class="card-body">
+                            {{ merchitem.long_desc }}
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" id="headingTwo">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                Details
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                        <div class="card-body">
+                            {{ merchitem.manu_details }}
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" id="headingThree">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                Shipping
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                        <div class="card-body">
+                            Club will reach out with shipping details
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+<script>
+function changeCarouselSlide(selectedColor) {
+    //Remove the active class from all carousel items
+    const carouselItems = document.querySelectorAll('.carousel-item');
+    carouselItems.forEach(item => item.classList.remove('active'));
+
+    //Find the carousel item with the matching image file name based on the color
+    for (const item of carouselItems) {
+        const imgSrc = item.querySelector('img').src;
+        if (imgSrc.includes(selectedColor.toLowerCase())) {
+            // Put the matching carousel item as active item image
+            item.classList.add('active');
+            break;
+        }
+    }
+}
+</script>
+{% endblock %}

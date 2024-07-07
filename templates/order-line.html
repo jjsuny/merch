@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block page_title %}Order Line{% endblock %}
+{% block page_content %}
+    <div class="page-contents">
+        <h1>Order Line</h1>
+        <form>
+             <!-- Form for entering order line details -->
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <!-- Input field for Purchase ID -->
+                    <label for="purchase-id" class="form-label">Purchase ID</label>
+                    <input type="text" class="form-control" id="purchase-id" placeholder="Enter purchase ID">
+                </div>
+                <!-- Input field for Purchase Date -->
+                <div class="col-md-6 mb-3">
+                    <label for="purchase-date" class="form-label">Purchase Date</label>
+                    <!-- Input type corrected to "date" -->
+                    <input type="date" class="form-control" id="purchase-date">
+
+                </div>
+            </div>
+            <div class="row">
+                 <!-- Input field for Product ID -->
+                <div class="col-md-6 mb-3">
+                    <label for="product-id" class="form-label">Product ID</label>
+                    <input type="text" class="form-control" id="product-id" placeholder="Enter product ID">
+                </div>
+                <!-- Input field for Product Name -->
+                <div class="col-md-6 mb-3">
+                    <label for="product-name" class="form-label">Product Name</label>
+                    <input type="text" class="form-control" id="product-name" placeholder="Enter product name">
+                </div>
+            </div>
+            <div class="row">
+                <!-- Input field for Quantity -->
+                <div class="col-md-6 mb-3">
+                    <label for="quantity" class="form-label">Quantity</label>
+                    <input type="number" class="form-control" id="quantity" placeholder="Enter quantity">
+                </div>
+                <!-- Input field for Unit Cost -->
+                <div class="col-md-6 mb-3">
+                    <label for="unit-cost" class="form-label">Unit Cost ($)</label>
+                    <input type="text" class="form-control" id="unit-cost" placeholder="Enter unit cost">
+                </div>
+            </div>
+            <div class="row">
+                <!-- Input field for Total Cost -->
+                <div class="col-md-2 mb-3">
+                    <label for="total-cost" class="form-label">Total Cost ($)</label>
+                    <input type="text" class="form-control" id="total-cost" placeholder="Enter total cost">
+                </div>
+            </div>
+            <!-- Submit button for submitting the form -->
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</body>
+</html>
+{% endblock %}
